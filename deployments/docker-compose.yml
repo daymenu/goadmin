@@ -1,0 +1,8 @@
+version: '3'
+
+services: 
+  goadmin_mysql:
+    build: ../build/package/mysql
+    ports:
+      - '3306:3306'
+

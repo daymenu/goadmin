@@ -1,0 +1,5 @@
+db:
+  goadmin:
+    username: root
+    password: 123456
+    dbname: goadmin
