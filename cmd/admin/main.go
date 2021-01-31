@@ -1,11 +1,9 @@
 package main
 
 import (
-	"fmt"
-
-	"github.com/daymenu/goadmin/internal/config"
+	"github.com/daymenu/goadmin/internal/app/admin"
 )
 
 func main() {
-	fmt.Println(config.AppDir())
+	admin.RunAdmin()
 }
