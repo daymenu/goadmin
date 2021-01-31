@@ -1,17 +1,20 @@
 package pkg
 
 import (
-	"database/sql"
 	"fmt"
 
+	// mysql db driver
+	_ "github.com/go-sql-driver/mysql"
+
 	"github.com/daymenu/goadmin/internal/config"
+	"github.com/daymenu/goadmin/internal/ent"
 )
 
 // Hello hello
 var Hello = "hello"
 
-// GoAdminDB goadmin db
-func GoAdminDB(c *config.DB) (*sql.DB, error) {
+// EntAdminClient goadmin db
+func EntAdminClient(c *config.DB) (*ent.Client, error) {
 	dns := fmt.Sprintf(
 		"%s:%s@tcp(%s:%s)/%s",
 		c.UserName,
@@ -20,5 +23,5 @@ func GoAdminDB(c *config.DB) (*sql.DB, error) {
 		c.Port,
 		c.DbName,
 	)
-	return sql.Open(c.Driver, dns)
+	return ent.Open(c.Driver, dns)
 }

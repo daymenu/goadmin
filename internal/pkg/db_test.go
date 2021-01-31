@@ -9,7 +9,7 @@ import (
 )
 
 func TestGetGoAdminDB(t *testing.T) {
-	db, err := GoAdminDB(&config.DB{
+	client, err := GoAdminDB(&config.DB{
 		Driver:   "mysql",
 		Host:     "127.0.0.1",
 		Port:     "3306",
@@ -23,7 +23,7 @@ func TestGetGoAdminDB(t *testing.T) {
 		t.Error(err)
 	}
 
-	if err := db.Ping(); err != nil {
+	if err := client; err != nil {
 		t.Error(err)
 	}
 }
