@@ -1,33 +1,22 @@
 package config
 
 import (
-	"fmt"
-	"os"
-	"path/filepath"
-	"strings"
 	"testing"
 )
 
-func TestJoinPath(t *testing.T) {
-	testFile := "internal/config/app.go"
-	path := JoinPath(testFile)
-	f, err := os.Open(path)
+func TestLoad(t *testing.T) {
+	config := New()
+	c, err := config.Load()
 	if err != nil {
-		t.Errorf("open file is failed :%s", path)
+		t.Error(err)
 	}
-	defer f.Close()
-	if !strings.HasSuffix(f.Name(), testFile) {
-		t.Errorf("%s is not contains %s\n", f.Name(), testFile)
-	}
+	t.Errorf("%#v", c)
 }
 
-func TestLoad(t *testing.T) {
-	fileName := filepath.Join("config", "app.yml")
-	path := JoinPath(fileName)
-	c, err := Load(path)
+func TestLog(t *testing.T) {
+	config, err := New().Load()
 	if err != nil {
-		t.Errorf("read config is failed")
+		t.Error(err)
 	}
-	fmt.Println(c.DBs.GoAdmin)
-	t.Errorf("%#v", c)
+	t.Errorf("%#v", config.GetLog())
 }

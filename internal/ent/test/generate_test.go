@@ -2,7 +2,6 @@ package test
 
 import (
 	"context"
-	"path/filepath"
 	"testing"
 
 	"github.com/daymenu/goadmin/internal/config"
@@ -11,8 +10,7 @@ import (
 )
 
 func TestGenerate(t *testing.T) {
-	confPath := filepath.Join(config.AppDir(), "config", "app.yml")
-	dbConf, err := config.Load(confPath)
+	dbConf, err := config.New().Load()
 	if err != nil {
 		t.Error("read db config is failed:", err)
 	}

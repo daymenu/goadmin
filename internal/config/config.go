@@ -4,41 +4,61 @@ import (
 	"io/ioutil"
 	"path/filepath"
 	"runtime"
+	"strings"
 
 	"gopkg.in/yaml.v2"
 )
 
-// AppDir 获取goadmin root path
-func AppDir() string {
-	return filepath.Dir(filepath.Dir(curDir()))
+// Config config struct
+type Config struct {
+	profile string
+	dir     string
+	conf    *Conf
 }
 
-func curDir() string {
+// New 创建一个 config 的对象
+func New() *Config {
+	return &Config{
+		dir: defaultDir(),
+	}
+}
+
+// SetProfile set different profile
+func (c *Config) SetProfile(profile string) *Config {
+	c.profile = profile
+	return c
+}
+
+func defaultDir() string {
 	_, f, _, _ := runtime.Caller(0)
-	path := filepath.Dir(f)
-	return path
+	path := filepath.Dir(filepath.Dir(filepath.Dir(f)))
+	return filepath.Join(path, "config")
+}
+
+// Path path
+func (c *Config) Path() string {
+	pre := filepath.Join(c.dir, "app")
+	if strings.TrimSpace(c.profile) == "" {
+		return pre + ".yml"
+	}
+	return pre + "-" + c.profile + ".yml"
 }
 
 // Load 加载配置文件
-func Load(path string) (*Config, error) {
-	fb, err := ioutil.ReadFile(path)
+func (c *Config) Load() (*Conf, error) {
+	fb, err := ioutil.ReadFile(c.Path())
 	if err != nil {
 		return nil, err
 	}
-	c := &Config{}
-	parseConfig(fb, c)
-	return c, nil
+	conf := &Conf{}
+	parseConfig(fb, conf)
+	return conf, nil
 }
 
-func parseConfig(data []byte, c *Config) (*Config, error) {
+func parseConfig(data []byte, c *Conf) (*Conf, error) {
 	err := yaml.Unmarshal(data, c)
 	if err != nil {
 		return nil, err
 	}
 	return c, nil
-}
-
-// JoinPath join path
-func JoinPath(path string) string {
-	return filepath.Join(AppDir(), path)
 }
