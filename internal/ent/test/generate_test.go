@@ -14,7 +14,7 @@ func TestGenerate(t *testing.T) {
 	if err != nil {
 		t.Error("read db config is failed:", err)
 	}
-	client, err := pkg.EntAdminClient(&dbConf.DBs.GoAdmin)
+	client, err := pkg.EntClient(&dbConf.DBs.GoAdmin)
 	if err != nil {
 		t.Error("create ent client is failed:", err)
 	}

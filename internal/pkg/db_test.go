@@ -9,7 +9,7 @@ import (
 )
 
 func TestGetGoAdminDB(t *testing.T) {
-	client, err := EntAdminClient(&config.DB{
+	client, err := EntClient(&config.DB{
 		Driver:   "mysql",
 		Host:     "127.0.0.1",
 		Port:     "3306",

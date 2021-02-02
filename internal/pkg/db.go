@@ -10,11 +10,8 @@ import (
 	"github.com/daymenu/goadmin/internal/ent"
 )
 
-// Hello hello
-var Hello = "hello"
-
-// EntAdminClient goadmin db
-func EntAdminClient(c *config.DB) (*ent.Client, error) {
+// EntClient ent db
+func EntClient(c *config.DB) (*ent.Client, error) {
 	dns := fmt.Sprintf(
 		"%s:%s@tcp(%s:%s)/%s",
 		c.UserName,

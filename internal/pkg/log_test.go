@@ -1,12 +1,14 @@
 package pkg
 
 import (
-	"log"
 	"testing"
+
+	"go.uber.org/zap"
 )
 
 func TestLog(t *testing.T) {
-	New()
-	log.Println("ddd", 3)
+	logger := NewLog()
+	defer logger.Sync()
+	logger.Info("you", zap.String("haha", "hihi"))
 	t.Error()
 }
