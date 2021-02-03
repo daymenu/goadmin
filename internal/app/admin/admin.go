@@ -3,6 +3,8 @@ package admin
 import (
 	"time"
 
+	"github.com/daymenu/goadmin/internal/app/admin/controller"
+	"github.com/daymenu/goadmin/internal/app/admin/router"
 	"github.com/daymenu/goadmin/internal/middleware"
 	"github.com/daymenu/goadmin/internal/pkg"
 	"github.com/gin-contrib/requestid"
@@ -22,11 +24,9 @@ func RunAdmin(addr ...string) {
 
 	engine.Use(middleware.RecoveryWithZap(logger.Logger, true))
 
-	engine.GET("/ping", func(c *gin.Context) {
+	engine.GET("/ping", controller.Ping)
 
-		c.JSON(200, gin.H{
-			"message": "pong" + requestid.Get(c),
-		})
-	})
-	engine.Run(addr...) // 监听并在 0.0.0.0:8080 上启动服务
+	router.AddAdmin(engine)
+
+	engine.Run(addr...)
 }
