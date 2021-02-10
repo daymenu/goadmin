@@ -3,6 +3,8 @@
 package admin
 
 import (
+	"time"
+
 	"github.com/daymenu/goadmin/internal/ent/predicate"
 	"github.com/facebook/ent/dialect/sql"
 )
@@ -90,29 +92,71 @@ func IDLTE(id int) predicate.Admin {
 	})
 }
 
-// Name applies equality check predicate on the "name" field. It's identical to NameEQ.
-func Name(v string) predicate.Admin {
+// CreateTime applies equality check predicate on the "create_time" field. It's identical to CreateTimeEQ.
+func CreateTime(v time.Time) predicate.Admin {
 	return predicate.Admin(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldName), v))
+		s.Where(sql.EQ(s.C(FieldCreateTime), v))
 	})
 }
 
-// NameEQ applies the EQ predicate on the "name" field.
-func NameEQ(v string) predicate.Admin {
+// UpdateTime applies equality check predicate on the "update_time" field. It's identical to UpdateTimeEQ.
+func UpdateTime(v time.Time) predicate.Admin {
 	return predicate.Admin(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldName), v))
+		s.Where(sql.EQ(s.C(FieldUpdateTime), v))
 	})
 }
 
-// NameNEQ applies the NEQ predicate on the "name" field.
-func NameNEQ(v string) predicate.Admin {
+// Status applies equality check predicate on the "status" field. It's identical to StatusEQ.
+func Status(v int) predicate.Admin {
 	return predicate.Admin(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldName), v))
+		s.Where(sql.EQ(s.C(FieldStatus), v))
 	})
 }
 
-// NameIn applies the In predicate on the "name" field.
-func NameIn(vs ...string) predicate.Admin {
+// DelStatus applies equality check predicate on the "del_status" field. It's identical to DelStatusEQ.
+func DelStatus(v int) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldDelStatus), v))
+	})
+}
+
+// UserName applies equality check predicate on the "user_name" field. It's identical to UserNameEQ.
+func UserName(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldUserName), v))
+	})
+}
+
+// TrueName applies equality check predicate on the "true_name" field. It's identical to TrueNameEQ.
+func TrueName(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTrueName), v))
+	})
+}
+
+// Mobile applies equality check predicate on the "mobile" field. It's identical to MobileEQ.
+func Mobile(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldMobile), v))
+	})
+}
+
+// CreateTimeEQ applies the EQ predicate on the "create_time" field.
+func CreateTimeEQ(v time.Time) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldCreateTime), v))
+	})
+}
+
+// CreateTimeNEQ applies the NEQ predicate on the "create_time" field.
+func CreateTimeNEQ(v time.Time) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldCreateTime), v))
+	})
+}
+
+// CreateTimeIn applies the In predicate on the "create_time" field.
+func CreateTimeIn(vs ...time.Time) predicate.Admin {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -124,12 +168,12 @@ func NameIn(vs ...string) predicate.Admin {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldName), v...))
+		s.Where(sql.In(s.C(FieldCreateTime), v...))
 	})
 }
 
-// NameNotIn applies the NotIn predicate on the "name" field.
-func NameNotIn(vs ...string) predicate.Admin {
+// CreateTimeNotIn applies the NotIn predicate on the "create_time" field.
+func CreateTimeNotIn(vs ...time.Time) predicate.Admin {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -141,70 +185,596 @@ func NameNotIn(vs ...string) predicate.Admin {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldName), v...))
+		s.Where(sql.NotIn(s.C(FieldCreateTime), v...))
 	})
 }
 
-// NameGT applies the GT predicate on the "name" field.
-func NameGT(v string) predicate.Admin {
+// CreateTimeGT applies the GT predicate on the "create_time" field.
+func CreateTimeGT(v time.Time) predicate.Admin {
 	return predicate.Admin(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldName), v))
+		s.Where(sql.GT(s.C(FieldCreateTime), v))
 	})
 }
 
-// NameGTE applies the GTE predicate on the "name" field.
-func NameGTE(v string) predicate.Admin {
+// CreateTimeGTE applies the GTE predicate on the "create_time" field.
+func CreateTimeGTE(v time.Time) predicate.Admin {
 	return predicate.Admin(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldName), v))
+		s.Where(sql.GTE(s.C(FieldCreateTime), v))
 	})
 }
 
-// NameLT applies the LT predicate on the "name" field.
-func NameLT(v string) predicate.Admin {
+// CreateTimeLT applies the LT predicate on the "create_time" field.
+func CreateTimeLT(v time.Time) predicate.Admin {
 	return predicate.Admin(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldName), v))
+		s.Where(sql.LT(s.C(FieldCreateTime), v))
 	})
 }
 
-// NameLTE applies the LTE predicate on the "name" field.
-func NameLTE(v string) predicate.Admin {
+// CreateTimeLTE applies the LTE predicate on the "create_time" field.
+func CreateTimeLTE(v time.Time) predicate.Admin {
 	return predicate.Admin(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldName), v))
+		s.Where(sql.LTE(s.C(FieldCreateTime), v))
 	})
 }
 
-// NameContains applies the Contains predicate on the "name" field.
-func NameContains(v string) predicate.Admin {
+// UpdateTimeEQ applies the EQ predicate on the "update_time" field.
+func UpdateTimeEQ(v time.Time) predicate.Admin {
 	return predicate.Admin(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldName), v))
+		s.Where(sql.EQ(s.C(FieldUpdateTime), v))
 	})
 }
 
-// NameHasPrefix applies the HasPrefix predicate on the "name" field.
-func NameHasPrefix(v string) predicate.Admin {
+// UpdateTimeNEQ applies the NEQ predicate on the "update_time" field.
+func UpdateTimeNEQ(v time.Time) predicate.Admin {
 	return predicate.Admin(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldName), v))
+		s.Where(sql.NEQ(s.C(FieldUpdateTime), v))
 	})
 }
 
-// NameHasSuffix applies the HasSuffix predicate on the "name" field.
-func NameHasSuffix(v string) predicate.Admin {
+// UpdateTimeIn applies the In predicate on the "update_time" field.
+func UpdateTimeIn(vs ...time.Time) predicate.Admin {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
 	return predicate.Admin(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldName), v))
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldUpdateTime), v...))
 	})
 }
 
-// NameEqualFold applies the EqualFold predicate on the "name" field.
-func NameEqualFold(v string) predicate.Admin {
+// UpdateTimeNotIn applies the NotIn predicate on the "update_time" field.
+func UpdateTimeNotIn(vs ...time.Time) predicate.Admin {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
 	return predicate.Admin(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldName), v))
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldUpdateTime), v...))
 	})
 }
 
-// NameContainsFold applies the ContainsFold predicate on the "name" field.
-func NameContainsFold(v string) predicate.Admin {
+// UpdateTimeGT applies the GT predicate on the "update_time" field.
+func UpdateTimeGT(v time.Time) predicate.Admin {
 	return predicate.Admin(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldName), v))
+		s.Where(sql.GT(s.C(FieldUpdateTime), v))
+	})
+}
+
+// UpdateTimeGTE applies the GTE predicate on the "update_time" field.
+func UpdateTimeGTE(v time.Time) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldUpdateTime), v))
+	})
+}
+
+// UpdateTimeLT applies the LT predicate on the "update_time" field.
+func UpdateTimeLT(v time.Time) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldUpdateTime), v))
+	})
+}
+
+// UpdateTimeLTE applies the LTE predicate on the "update_time" field.
+func UpdateTimeLTE(v time.Time) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldUpdateTime), v))
+	})
+}
+
+// StatusEQ applies the EQ predicate on the "status" field.
+func StatusEQ(v int) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldStatus), v))
+	})
+}
+
+// StatusNEQ applies the NEQ predicate on the "status" field.
+func StatusNEQ(v int) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldStatus), v))
+	})
+}
+
+// StatusIn applies the In predicate on the "status" field.
+func StatusIn(vs ...int) predicate.Admin {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Admin(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldStatus), v...))
+	})
+}
+
+// StatusNotIn applies the NotIn predicate on the "status" field.
+func StatusNotIn(vs ...int) predicate.Admin {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Admin(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldStatus), v...))
+	})
+}
+
+// StatusGT applies the GT predicate on the "status" field.
+func StatusGT(v int) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldStatus), v))
+	})
+}
+
+// StatusGTE applies the GTE predicate on the "status" field.
+func StatusGTE(v int) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldStatus), v))
+	})
+}
+
+// StatusLT applies the LT predicate on the "status" field.
+func StatusLT(v int) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldStatus), v))
+	})
+}
+
+// StatusLTE applies the LTE predicate on the "status" field.
+func StatusLTE(v int) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldStatus), v))
+	})
+}
+
+// DelStatusEQ applies the EQ predicate on the "del_status" field.
+func DelStatusEQ(v int) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldDelStatus), v))
+	})
+}
+
+// DelStatusNEQ applies the NEQ predicate on the "del_status" field.
+func DelStatusNEQ(v int) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldDelStatus), v))
+	})
+}
+
+// DelStatusIn applies the In predicate on the "del_status" field.
+func DelStatusIn(vs ...int) predicate.Admin {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Admin(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldDelStatus), v...))
+	})
+}
+
+// DelStatusNotIn applies the NotIn predicate on the "del_status" field.
+func DelStatusNotIn(vs ...int) predicate.Admin {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Admin(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldDelStatus), v...))
+	})
+}
+
+// DelStatusGT applies the GT predicate on the "del_status" field.
+func DelStatusGT(v int) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldDelStatus), v))
+	})
+}
+
+// DelStatusGTE applies the GTE predicate on the "del_status" field.
+func DelStatusGTE(v int) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldDelStatus), v))
+	})
+}
+
+// DelStatusLT applies the LT predicate on the "del_status" field.
+func DelStatusLT(v int) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldDelStatus), v))
+	})
+}
+
+// DelStatusLTE applies the LTE predicate on the "del_status" field.
+func DelStatusLTE(v int) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldDelStatus), v))
+	})
+}
+
+// UserNameEQ applies the EQ predicate on the "user_name" field.
+func UserNameEQ(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldUserName), v))
+	})
+}
+
+// UserNameNEQ applies the NEQ predicate on the "user_name" field.
+func UserNameNEQ(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldUserName), v))
+	})
+}
+
+// UserNameIn applies the In predicate on the "user_name" field.
+func UserNameIn(vs ...string) predicate.Admin {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Admin(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldUserName), v...))
+	})
+}
+
+// UserNameNotIn applies the NotIn predicate on the "user_name" field.
+func UserNameNotIn(vs ...string) predicate.Admin {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Admin(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldUserName), v...))
+	})
+}
+
+// UserNameGT applies the GT predicate on the "user_name" field.
+func UserNameGT(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldUserName), v))
+	})
+}
+
+// UserNameGTE applies the GTE predicate on the "user_name" field.
+func UserNameGTE(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldUserName), v))
+	})
+}
+
+// UserNameLT applies the LT predicate on the "user_name" field.
+func UserNameLT(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldUserName), v))
+	})
+}
+
+// UserNameLTE applies the LTE predicate on the "user_name" field.
+func UserNameLTE(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldUserName), v))
+	})
+}
+
+// UserNameContains applies the Contains predicate on the "user_name" field.
+func UserNameContains(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldUserName), v))
+	})
+}
+
+// UserNameHasPrefix applies the HasPrefix predicate on the "user_name" field.
+func UserNameHasPrefix(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldUserName), v))
+	})
+}
+
+// UserNameHasSuffix applies the HasSuffix predicate on the "user_name" field.
+func UserNameHasSuffix(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldUserName), v))
+	})
+}
+
+// UserNameEqualFold applies the EqualFold predicate on the "user_name" field.
+func UserNameEqualFold(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldUserName), v))
+	})
+}
+
+// UserNameContainsFold applies the ContainsFold predicate on the "user_name" field.
+func UserNameContainsFold(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldUserName), v))
+	})
+}
+
+// TrueNameEQ applies the EQ predicate on the "true_name" field.
+func TrueNameEQ(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTrueName), v))
+	})
+}
+
+// TrueNameNEQ applies the NEQ predicate on the "true_name" field.
+func TrueNameNEQ(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldTrueName), v))
+	})
+}
+
+// TrueNameIn applies the In predicate on the "true_name" field.
+func TrueNameIn(vs ...string) predicate.Admin {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Admin(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldTrueName), v...))
+	})
+}
+
+// TrueNameNotIn applies the NotIn predicate on the "true_name" field.
+func TrueNameNotIn(vs ...string) predicate.Admin {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Admin(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldTrueName), v...))
+	})
+}
+
+// TrueNameGT applies the GT predicate on the "true_name" field.
+func TrueNameGT(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldTrueName), v))
+	})
+}
+
+// TrueNameGTE applies the GTE predicate on the "true_name" field.
+func TrueNameGTE(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldTrueName), v))
+	})
+}
+
+// TrueNameLT applies the LT predicate on the "true_name" field.
+func TrueNameLT(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldTrueName), v))
+	})
+}
+
+// TrueNameLTE applies the LTE predicate on the "true_name" field.
+func TrueNameLTE(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldTrueName), v))
+	})
+}
+
+// TrueNameContains applies the Contains predicate on the "true_name" field.
+func TrueNameContains(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldTrueName), v))
+	})
+}
+
+// TrueNameHasPrefix applies the HasPrefix predicate on the "true_name" field.
+func TrueNameHasPrefix(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldTrueName), v))
+	})
+}
+
+// TrueNameHasSuffix applies the HasSuffix predicate on the "true_name" field.
+func TrueNameHasSuffix(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldTrueName), v))
+	})
+}
+
+// TrueNameEqualFold applies the EqualFold predicate on the "true_name" field.
+func TrueNameEqualFold(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldTrueName), v))
+	})
+}
+
+// TrueNameContainsFold applies the ContainsFold predicate on the "true_name" field.
+func TrueNameContainsFold(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldTrueName), v))
+	})
+}
+
+// MobileEQ applies the EQ predicate on the "mobile" field.
+func MobileEQ(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldMobile), v))
+	})
+}
+
+// MobileNEQ applies the NEQ predicate on the "mobile" field.
+func MobileNEQ(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldMobile), v))
+	})
+}
+
+// MobileIn applies the In predicate on the "mobile" field.
+func MobileIn(vs ...string) predicate.Admin {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Admin(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldMobile), v...))
+	})
+}
+
+// MobileNotIn applies the NotIn predicate on the "mobile" field.
+func MobileNotIn(vs ...string) predicate.Admin {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Admin(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldMobile), v...))
+	})
+}
+
+// MobileGT applies the GT predicate on the "mobile" field.
+func MobileGT(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldMobile), v))
+	})
+}
+
+// MobileGTE applies the GTE predicate on the "mobile" field.
+func MobileGTE(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldMobile), v))
+	})
+}
+
+// MobileLT applies the LT predicate on the "mobile" field.
+func MobileLT(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldMobile), v))
+	})
+}
+
+// MobileLTE applies the LTE predicate on the "mobile" field.
+func MobileLTE(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldMobile), v))
+	})
+}
+
+// MobileContains applies the Contains predicate on the "mobile" field.
+func MobileContains(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldMobile), v))
+	})
+}
+
+// MobileHasPrefix applies the HasPrefix predicate on the "mobile" field.
+func MobileHasPrefix(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldMobile), v))
+	})
+}
+
+// MobileHasSuffix applies the HasSuffix predicate on the "mobile" field.
+func MobileHasSuffix(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldMobile), v))
+	})
+}
+
+// MobileEqualFold applies the EqualFold predicate on the "mobile" field.
+func MobileEqualFold(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldMobile), v))
+	})
+}
+
+// MobileContainsFold applies the ContainsFold predicate on the "mobile" field.
+func MobileContainsFold(v string) predicate.Admin {
+	return predicate.Admin(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldMobile), v))
 	})
 }
 

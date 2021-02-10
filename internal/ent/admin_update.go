@@ -26,16 +26,86 @@ func (au *AdminUpdate) Where(ps ...predicate.Admin) *AdminUpdate {
 	return au
 }
 
-// SetName sets the "name" field.
-func (au *AdminUpdate) SetName(s string) *AdminUpdate {
-	au.mutation.SetName(s)
+// SetStatus sets the "status" field.
+func (au *AdminUpdate) SetStatus(i int) *AdminUpdate {
+	au.mutation.ResetStatus()
+	au.mutation.SetStatus(i)
 	return au
 }
 
-// SetNillableName sets the "name" field if the given value is not nil.
-func (au *AdminUpdate) SetNillableName(s *string) *AdminUpdate {
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (au *AdminUpdate) SetNillableStatus(i *int) *AdminUpdate {
+	if i != nil {
+		au.SetStatus(*i)
+	}
+	return au
+}
+
+// AddStatus adds i to the "status" field.
+func (au *AdminUpdate) AddStatus(i int) *AdminUpdate {
+	au.mutation.AddStatus(i)
+	return au
+}
+
+// SetDelStatus sets the "del_status" field.
+func (au *AdminUpdate) SetDelStatus(i int) *AdminUpdate {
+	au.mutation.ResetDelStatus()
+	au.mutation.SetDelStatus(i)
+	return au
+}
+
+// SetNillableDelStatus sets the "del_status" field if the given value is not nil.
+func (au *AdminUpdate) SetNillableDelStatus(i *int) *AdminUpdate {
+	if i != nil {
+		au.SetDelStatus(*i)
+	}
+	return au
+}
+
+// AddDelStatus adds i to the "del_status" field.
+func (au *AdminUpdate) AddDelStatus(i int) *AdminUpdate {
+	au.mutation.AddDelStatus(i)
+	return au
+}
+
+// SetUserName sets the "user_name" field.
+func (au *AdminUpdate) SetUserName(s string) *AdminUpdate {
+	au.mutation.SetUserName(s)
+	return au
+}
+
+// SetNillableUserName sets the "user_name" field if the given value is not nil.
+func (au *AdminUpdate) SetNillableUserName(s *string) *AdminUpdate {
 	if s != nil {
-		au.SetName(*s)
+		au.SetUserName(*s)
+	}
+	return au
+}
+
+// SetTrueName sets the "true_name" field.
+func (au *AdminUpdate) SetTrueName(s string) *AdminUpdate {
+	au.mutation.SetTrueName(s)
+	return au
+}
+
+// SetNillableTrueName sets the "true_name" field if the given value is not nil.
+func (au *AdminUpdate) SetNillableTrueName(s *string) *AdminUpdate {
+	if s != nil {
+		au.SetTrueName(*s)
+	}
+	return au
+}
+
+// SetMobile sets the "mobile" field.
+func (au *AdminUpdate) SetMobile(s string) *AdminUpdate {
+	au.mutation.SetMobile(s)
+	return au
+}
+
+// SetNillableMobile sets the "mobile" field if the given value is not nil.
+func (au *AdminUpdate) SetNillableMobile(s *string) *AdminUpdate {
+	if s != nil {
+		au.SetMobile(*s)
 	}
 	return au
 }
@@ -51,6 +121,7 @@ func (au *AdminUpdate) Save(ctx context.Context) (int, error) {
 		err      error
 		affected int
 	)
+	au.defaults()
 	if len(au.hooks) == 0 {
 		affected, err = au.sqlSave(ctx)
 	} else {
@@ -96,6 +167,14 @@ func (au *AdminUpdate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (au *AdminUpdate) defaults() {
+	if _, ok := au.mutation.UpdateTime(); !ok {
+		v := admin.UpdateDefaultUpdateTime()
+		au.mutation.SetUpdateTime(v)
+	}
+}
+
 func (au *AdminUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -114,11 +193,60 @@ func (au *AdminUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
-	if value, ok := au.mutation.Name(); ok {
+	if value, ok := au.mutation.UpdateTime(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: admin.FieldUpdateTime,
+		})
+	}
+	if value, ok := au.mutation.Status(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: admin.FieldStatus,
+		})
+	}
+	if value, ok := au.mutation.AddedStatus(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: admin.FieldStatus,
+		})
+	}
+	if value, ok := au.mutation.DelStatus(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: admin.FieldDelStatus,
+		})
+	}
+	if value, ok := au.mutation.AddedDelStatus(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: admin.FieldDelStatus,
+		})
+	}
+	if value, ok := au.mutation.UserName(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: admin.FieldName,
+			Column: admin.FieldUserName,
+		})
+	}
+	if value, ok := au.mutation.TrueName(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: admin.FieldTrueName,
+		})
+	}
+	if value, ok := au.mutation.Mobile(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: admin.FieldMobile,
 		})
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, au.driver, _spec); err != nil {
@@ -139,16 +267,86 @@ type AdminUpdateOne struct {
 	mutation *AdminMutation
 }
 
-// SetName sets the "name" field.
-func (auo *AdminUpdateOne) SetName(s string) *AdminUpdateOne {
-	auo.mutation.SetName(s)
+// SetStatus sets the "status" field.
+func (auo *AdminUpdateOne) SetStatus(i int) *AdminUpdateOne {
+	auo.mutation.ResetStatus()
+	auo.mutation.SetStatus(i)
 	return auo
 }
 
-// SetNillableName sets the "name" field if the given value is not nil.
-func (auo *AdminUpdateOne) SetNillableName(s *string) *AdminUpdateOne {
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (auo *AdminUpdateOne) SetNillableStatus(i *int) *AdminUpdateOne {
+	if i != nil {
+		auo.SetStatus(*i)
+	}
+	return auo
+}
+
+// AddStatus adds i to the "status" field.
+func (auo *AdminUpdateOne) AddStatus(i int) *AdminUpdateOne {
+	auo.mutation.AddStatus(i)
+	return auo
+}
+
+// SetDelStatus sets the "del_status" field.
+func (auo *AdminUpdateOne) SetDelStatus(i int) *AdminUpdateOne {
+	auo.mutation.ResetDelStatus()
+	auo.mutation.SetDelStatus(i)
+	return auo
+}
+
+// SetNillableDelStatus sets the "del_status" field if the given value is not nil.
+func (auo *AdminUpdateOne) SetNillableDelStatus(i *int) *AdminUpdateOne {
+	if i != nil {
+		auo.SetDelStatus(*i)
+	}
+	return auo
+}
+
+// AddDelStatus adds i to the "del_status" field.
+func (auo *AdminUpdateOne) AddDelStatus(i int) *AdminUpdateOne {
+	auo.mutation.AddDelStatus(i)
+	return auo
+}
+
+// SetUserName sets the "user_name" field.
+func (auo *AdminUpdateOne) SetUserName(s string) *AdminUpdateOne {
+	auo.mutation.SetUserName(s)
+	return auo
+}
+
+// SetNillableUserName sets the "user_name" field if the given value is not nil.
+func (auo *AdminUpdateOne) SetNillableUserName(s *string) *AdminUpdateOne {
 	if s != nil {
-		auo.SetName(*s)
+		auo.SetUserName(*s)
+	}
+	return auo
+}
+
+// SetTrueName sets the "true_name" field.
+func (auo *AdminUpdateOne) SetTrueName(s string) *AdminUpdateOne {
+	auo.mutation.SetTrueName(s)
+	return auo
+}
+
+// SetNillableTrueName sets the "true_name" field if the given value is not nil.
+func (auo *AdminUpdateOne) SetNillableTrueName(s *string) *AdminUpdateOne {
+	if s != nil {
+		auo.SetTrueName(*s)
+	}
+	return auo
+}
+
+// SetMobile sets the "mobile" field.
+func (auo *AdminUpdateOne) SetMobile(s string) *AdminUpdateOne {
+	auo.mutation.SetMobile(s)
+	return auo
+}
+
+// SetNillableMobile sets the "mobile" field if the given value is not nil.
+func (auo *AdminUpdateOne) SetNillableMobile(s *string) *AdminUpdateOne {
+	if s != nil {
+		auo.SetMobile(*s)
 	}
 	return auo
 }
@@ -164,6 +362,7 @@ func (auo *AdminUpdateOne) Save(ctx context.Context) (*Admin, error) {
 		err  error
 		node *Admin
 	)
+	auo.defaults()
 	if len(auo.hooks) == 0 {
 		node, err = auo.sqlSave(ctx)
 	} else {
@@ -209,6 +408,14 @@ func (auo *AdminUpdateOne) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (auo *AdminUpdateOne) defaults() {
+	if _, ok := auo.mutation.UpdateTime(); !ok {
+		v := admin.UpdateDefaultUpdateTime()
+		auo.mutation.SetUpdateTime(v)
+	}
+}
+
 func (auo *AdminUpdateOne) sqlSave(ctx context.Context) (_node *Admin, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -225,11 +432,60 @@ func (auo *AdminUpdateOne) sqlSave(ctx context.Context) (_node *Admin, err error
 		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing Admin.ID for update")}
 	}
 	_spec.Node.ID.Value = id
-	if value, ok := auo.mutation.Name(); ok {
+	if value, ok := auo.mutation.UpdateTime(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: admin.FieldUpdateTime,
+		})
+	}
+	if value, ok := auo.mutation.Status(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: admin.FieldStatus,
+		})
+	}
+	if value, ok := auo.mutation.AddedStatus(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: admin.FieldStatus,
+		})
+	}
+	if value, ok := auo.mutation.DelStatus(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: admin.FieldDelStatus,
+		})
+	}
+	if value, ok := auo.mutation.AddedDelStatus(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: admin.FieldDelStatus,
+		})
+	}
+	if value, ok := auo.mutation.UserName(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: admin.FieldName,
+			Column: admin.FieldUserName,
+		})
+	}
+	if value, ok := auo.mutation.TrueName(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: admin.FieldTrueName,
+		})
+	}
+	if value, ok := auo.mutation.Mobile(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: admin.FieldMobile,
 		})
 	}
 	_node = &Admin{config: auo.config}

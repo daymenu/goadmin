@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/daymenu/goadmin/internal/ent/admin"
 	"github.com/facebook/ent/dialect/sql/sqlgraph"
@@ -19,16 +20,100 @@ type AdminCreate struct {
 	hooks    []Hook
 }
 
-// SetName sets the "name" field.
-func (ac *AdminCreate) SetName(s string) *AdminCreate {
-	ac.mutation.SetName(s)
+// SetCreateTime sets the "create_time" field.
+func (ac *AdminCreate) SetCreateTime(t time.Time) *AdminCreate {
+	ac.mutation.SetCreateTime(t)
 	return ac
 }
 
-// SetNillableName sets the "name" field if the given value is not nil.
-func (ac *AdminCreate) SetNillableName(s *string) *AdminCreate {
+// SetNillableCreateTime sets the "create_time" field if the given value is not nil.
+func (ac *AdminCreate) SetNillableCreateTime(t *time.Time) *AdminCreate {
+	if t != nil {
+		ac.SetCreateTime(*t)
+	}
+	return ac
+}
+
+// SetUpdateTime sets the "update_time" field.
+func (ac *AdminCreate) SetUpdateTime(t time.Time) *AdminCreate {
+	ac.mutation.SetUpdateTime(t)
+	return ac
+}
+
+// SetNillableUpdateTime sets the "update_time" field if the given value is not nil.
+func (ac *AdminCreate) SetNillableUpdateTime(t *time.Time) *AdminCreate {
+	if t != nil {
+		ac.SetUpdateTime(*t)
+	}
+	return ac
+}
+
+// SetStatus sets the "status" field.
+func (ac *AdminCreate) SetStatus(i int) *AdminCreate {
+	ac.mutation.SetStatus(i)
+	return ac
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (ac *AdminCreate) SetNillableStatus(i *int) *AdminCreate {
+	if i != nil {
+		ac.SetStatus(*i)
+	}
+	return ac
+}
+
+// SetDelStatus sets the "del_status" field.
+func (ac *AdminCreate) SetDelStatus(i int) *AdminCreate {
+	ac.mutation.SetDelStatus(i)
+	return ac
+}
+
+// SetNillableDelStatus sets the "del_status" field if the given value is not nil.
+func (ac *AdminCreate) SetNillableDelStatus(i *int) *AdminCreate {
+	if i != nil {
+		ac.SetDelStatus(*i)
+	}
+	return ac
+}
+
+// SetUserName sets the "user_name" field.
+func (ac *AdminCreate) SetUserName(s string) *AdminCreate {
+	ac.mutation.SetUserName(s)
+	return ac
+}
+
+// SetNillableUserName sets the "user_name" field if the given value is not nil.
+func (ac *AdminCreate) SetNillableUserName(s *string) *AdminCreate {
 	if s != nil {
-		ac.SetName(*s)
+		ac.SetUserName(*s)
+	}
+	return ac
+}
+
+// SetTrueName sets the "true_name" field.
+func (ac *AdminCreate) SetTrueName(s string) *AdminCreate {
+	ac.mutation.SetTrueName(s)
+	return ac
+}
+
+// SetNillableTrueName sets the "true_name" field if the given value is not nil.
+func (ac *AdminCreate) SetNillableTrueName(s *string) *AdminCreate {
+	if s != nil {
+		ac.SetTrueName(*s)
+	}
+	return ac
+}
+
+// SetMobile sets the "mobile" field.
+func (ac *AdminCreate) SetMobile(s string) *AdminCreate {
+	ac.mutation.SetMobile(s)
+	return ac
+}
+
+// SetNillableMobile sets the "mobile" field if the given value is not nil.
+func (ac *AdminCreate) SetNillableMobile(s *string) *AdminCreate {
+	if s != nil {
+		ac.SetMobile(*s)
 	}
 	return ac
 }
@@ -85,16 +170,58 @@ func (ac *AdminCreate) SaveX(ctx context.Context) *Admin {
 
 // defaults sets the default values of the builder before save.
 func (ac *AdminCreate) defaults() {
-	if _, ok := ac.mutation.Name(); !ok {
-		v := admin.DefaultName
-		ac.mutation.SetName(v)
+	if _, ok := ac.mutation.CreateTime(); !ok {
+		v := admin.DefaultCreateTime()
+		ac.mutation.SetCreateTime(v)
+	}
+	if _, ok := ac.mutation.UpdateTime(); !ok {
+		v := admin.DefaultUpdateTime()
+		ac.mutation.SetUpdateTime(v)
+	}
+	if _, ok := ac.mutation.Status(); !ok {
+		v := admin.DefaultStatus
+		ac.mutation.SetStatus(v)
+	}
+	if _, ok := ac.mutation.DelStatus(); !ok {
+		v := admin.DefaultDelStatus
+		ac.mutation.SetDelStatus(v)
+	}
+	if _, ok := ac.mutation.UserName(); !ok {
+		v := admin.DefaultUserName
+		ac.mutation.SetUserName(v)
+	}
+	if _, ok := ac.mutation.TrueName(); !ok {
+		v := admin.DefaultTrueName
+		ac.mutation.SetTrueName(v)
+	}
+	if _, ok := ac.mutation.Mobile(); !ok {
+		v := admin.DefaultMobile
+		ac.mutation.SetMobile(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
 func (ac *AdminCreate) check() error {
-	if _, ok := ac.mutation.Name(); !ok {
-		return &ValidationError{Name: "name", err: errors.New("ent: missing required field \"name\"")}
+	if _, ok := ac.mutation.CreateTime(); !ok {
+		return &ValidationError{Name: "create_time", err: errors.New("ent: missing required field \"create_time\"")}
+	}
+	if _, ok := ac.mutation.UpdateTime(); !ok {
+		return &ValidationError{Name: "update_time", err: errors.New("ent: missing required field \"update_time\"")}
+	}
+	if _, ok := ac.mutation.Status(); !ok {
+		return &ValidationError{Name: "status", err: errors.New("ent: missing required field \"status\"")}
+	}
+	if _, ok := ac.mutation.DelStatus(); !ok {
+		return &ValidationError{Name: "del_status", err: errors.New("ent: missing required field \"del_status\"")}
+	}
+	if _, ok := ac.mutation.UserName(); !ok {
+		return &ValidationError{Name: "user_name", err: errors.New("ent: missing required field \"user_name\"")}
+	}
+	if _, ok := ac.mutation.TrueName(); !ok {
+		return &ValidationError{Name: "true_name", err: errors.New("ent: missing required field \"true_name\"")}
+	}
+	if _, ok := ac.mutation.Mobile(); !ok {
+		return &ValidationError{Name: "mobile", err: errors.New("ent: missing required field \"mobile\"")}
 	}
 	return nil
 }
@@ -123,13 +250,61 @@ func (ac *AdminCreate) createSpec() (*Admin, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
-	if value, ok := ac.mutation.Name(); ok {
+	if value, ok := ac.mutation.CreateTime(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: admin.FieldCreateTime,
+		})
+		_node.CreateTime = value
+	}
+	if value, ok := ac.mutation.UpdateTime(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: admin.FieldUpdateTime,
+		})
+		_node.UpdateTime = value
+	}
+	if value, ok := ac.mutation.Status(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: admin.FieldStatus,
+		})
+		_node.Status = value
+	}
+	if value, ok := ac.mutation.DelStatus(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: admin.FieldDelStatus,
+		})
+		_node.DelStatus = value
+	}
+	if value, ok := ac.mutation.UserName(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: admin.FieldName,
+			Column: admin.FieldUserName,
 		})
-		_node.Name = value
+		_node.UserName = value
+	}
+	if value, ok := ac.mutation.TrueName(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: admin.FieldTrueName,
+		})
+		_node.TrueName = value
+	}
+	if value, ok := ac.mutation.Mobile(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: admin.FieldMobile,
+		})
+		_node.Mobile = value
 	}
 	return _node, _spec
 }

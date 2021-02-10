@@ -6,6 +6,7 @@ import (
 	"context"
 	"fmt"
 	"sync"
+	"time"
 
 	"github.com/daymenu/goadmin/internal/ent/admin"
 	"github.com/daymenu/goadmin/internal/ent/predicate"
@@ -31,7 +32,15 @@ type AdminMutation struct {
 	op            Op
 	typ           string
 	id            *int
-	name          *string
+	create_time   *time.Time
+	update_time   *time.Time
+	status        *int
+	addstatus     *int
+	del_status    *int
+	adddel_status *int
+	user_name     *string
+	true_name     *string
+	mobile        *string
 	clearedFields map[string]struct{}
 	done          bool
 	oldValue      func(context.Context) (*Admin, error)
@@ -117,40 +126,296 @@ func (m *AdminMutation) ID() (id int, exists bool) {
 	return *m.id, true
 }
 
-// SetName sets the "name" field.
-func (m *AdminMutation) SetName(s string) {
-	m.name = &s
+// SetCreateTime sets the "create_time" field.
+func (m *AdminMutation) SetCreateTime(t time.Time) {
+	m.create_time = &t
 }
 
-// Name returns the value of the "name" field in the mutation.
-func (m *AdminMutation) Name() (r string, exists bool) {
-	v := m.name
+// CreateTime returns the value of the "create_time" field in the mutation.
+func (m *AdminMutation) CreateTime() (r time.Time, exists bool) {
+	v := m.create_time
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldName returns the old "name" field's value of the Admin entity.
+// OldCreateTime returns the old "create_time" field's value of the Admin entity.
 // If the Admin object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *AdminMutation) OldName(ctx context.Context) (v string, err error) {
+func (m *AdminMutation) OldCreateTime(ctx context.Context) (v time.Time, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldName is only allowed on UpdateOne operations")
+		return v, fmt.Errorf("OldCreateTime is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldName requires an ID field in the mutation")
+		return v, fmt.Errorf("OldCreateTime requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldName: %w", err)
+		return v, fmt.Errorf("querying old value for OldCreateTime: %w", err)
 	}
-	return oldValue.Name, nil
+	return oldValue.CreateTime, nil
 }
 
-// ResetName resets all changes to the "name" field.
-func (m *AdminMutation) ResetName() {
-	m.name = nil
+// ResetCreateTime resets all changes to the "create_time" field.
+func (m *AdminMutation) ResetCreateTime() {
+	m.create_time = nil
+}
+
+// SetUpdateTime sets the "update_time" field.
+func (m *AdminMutation) SetUpdateTime(t time.Time) {
+	m.update_time = &t
+}
+
+// UpdateTime returns the value of the "update_time" field in the mutation.
+func (m *AdminMutation) UpdateTime() (r time.Time, exists bool) {
+	v := m.update_time
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdateTime returns the old "update_time" field's value of the Admin entity.
+// If the Admin object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AdminMutation) OldUpdateTime(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldUpdateTime is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldUpdateTime requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdateTime: %w", err)
+	}
+	return oldValue.UpdateTime, nil
+}
+
+// ResetUpdateTime resets all changes to the "update_time" field.
+func (m *AdminMutation) ResetUpdateTime() {
+	m.update_time = nil
+}
+
+// SetStatus sets the "status" field.
+func (m *AdminMutation) SetStatus(i int) {
+	m.status = &i
+	m.addstatus = nil
+}
+
+// Status returns the value of the "status" field in the mutation.
+func (m *AdminMutation) Status() (r int, exists bool) {
+	v := m.status
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldStatus returns the old "status" field's value of the Admin entity.
+// If the Admin object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AdminMutation) OldStatus(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldStatus is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldStatus requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldStatus: %w", err)
+	}
+	return oldValue.Status, nil
+}
+
+// AddStatus adds i to the "status" field.
+func (m *AdminMutation) AddStatus(i int) {
+	if m.addstatus != nil {
+		*m.addstatus += i
+	} else {
+		m.addstatus = &i
+	}
+}
+
+// AddedStatus returns the value that was added to the "status" field in this mutation.
+func (m *AdminMutation) AddedStatus() (r int, exists bool) {
+	v := m.addstatus
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetStatus resets all changes to the "status" field.
+func (m *AdminMutation) ResetStatus() {
+	m.status = nil
+	m.addstatus = nil
+}
+
+// SetDelStatus sets the "del_status" field.
+func (m *AdminMutation) SetDelStatus(i int) {
+	m.del_status = &i
+	m.adddel_status = nil
+}
+
+// DelStatus returns the value of the "del_status" field in the mutation.
+func (m *AdminMutation) DelStatus() (r int, exists bool) {
+	v := m.del_status
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDelStatus returns the old "del_status" field's value of the Admin entity.
+// If the Admin object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AdminMutation) OldDelStatus(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldDelStatus is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldDelStatus requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDelStatus: %w", err)
+	}
+	return oldValue.DelStatus, nil
+}
+
+// AddDelStatus adds i to the "del_status" field.
+func (m *AdminMutation) AddDelStatus(i int) {
+	if m.adddel_status != nil {
+		*m.adddel_status += i
+	} else {
+		m.adddel_status = &i
+	}
+}
+
+// AddedDelStatus returns the value that was added to the "del_status" field in this mutation.
+func (m *AdminMutation) AddedDelStatus() (r int, exists bool) {
+	v := m.adddel_status
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetDelStatus resets all changes to the "del_status" field.
+func (m *AdminMutation) ResetDelStatus() {
+	m.del_status = nil
+	m.adddel_status = nil
+}
+
+// SetUserName sets the "user_name" field.
+func (m *AdminMutation) SetUserName(s string) {
+	m.user_name = &s
+}
+
+// UserName returns the value of the "user_name" field in the mutation.
+func (m *AdminMutation) UserName() (r string, exists bool) {
+	v := m.user_name
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUserName returns the old "user_name" field's value of the Admin entity.
+// If the Admin object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AdminMutation) OldUserName(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldUserName is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldUserName requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUserName: %w", err)
+	}
+	return oldValue.UserName, nil
+}
+
+// ResetUserName resets all changes to the "user_name" field.
+func (m *AdminMutation) ResetUserName() {
+	m.user_name = nil
+}
+
+// SetTrueName sets the "true_name" field.
+func (m *AdminMutation) SetTrueName(s string) {
+	m.true_name = &s
+}
+
+// TrueName returns the value of the "true_name" field in the mutation.
+func (m *AdminMutation) TrueName() (r string, exists bool) {
+	v := m.true_name
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldTrueName returns the old "true_name" field's value of the Admin entity.
+// If the Admin object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AdminMutation) OldTrueName(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldTrueName is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldTrueName requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldTrueName: %w", err)
+	}
+	return oldValue.TrueName, nil
+}
+
+// ResetTrueName resets all changes to the "true_name" field.
+func (m *AdminMutation) ResetTrueName() {
+	m.true_name = nil
+}
+
+// SetMobile sets the "mobile" field.
+func (m *AdminMutation) SetMobile(s string) {
+	m.mobile = &s
+}
+
+// Mobile returns the value of the "mobile" field in the mutation.
+func (m *AdminMutation) Mobile() (r string, exists bool) {
+	v := m.mobile
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldMobile returns the old "mobile" field's value of the Admin entity.
+// If the Admin object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AdminMutation) OldMobile(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldMobile is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldMobile requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldMobile: %w", err)
+	}
+	return oldValue.Mobile, nil
+}
+
+// ResetMobile resets all changes to the "mobile" field.
+func (m *AdminMutation) ResetMobile() {
+	m.mobile = nil
 }
 
 // Op returns the operation name.
@@ -167,9 +432,27 @@ func (m *AdminMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *AdminMutation) Fields() []string {
-	fields := make([]string, 0, 1)
-	if m.name != nil {
-		fields = append(fields, admin.FieldName)
+	fields := make([]string, 0, 7)
+	if m.create_time != nil {
+		fields = append(fields, admin.FieldCreateTime)
+	}
+	if m.update_time != nil {
+		fields = append(fields, admin.FieldUpdateTime)
+	}
+	if m.status != nil {
+		fields = append(fields, admin.FieldStatus)
+	}
+	if m.del_status != nil {
+		fields = append(fields, admin.FieldDelStatus)
+	}
+	if m.user_name != nil {
+		fields = append(fields, admin.FieldUserName)
+	}
+	if m.true_name != nil {
+		fields = append(fields, admin.FieldTrueName)
+	}
+	if m.mobile != nil {
+		fields = append(fields, admin.FieldMobile)
 	}
 	return fields
 }
@@ -179,8 +462,20 @@ func (m *AdminMutation) Fields() []string {
 // schema.
 func (m *AdminMutation) Field(name string) (ent.Value, bool) {
 	switch name {
-	case admin.FieldName:
-		return m.Name()
+	case admin.FieldCreateTime:
+		return m.CreateTime()
+	case admin.FieldUpdateTime:
+		return m.UpdateTime()
+	case admin.FieldStatus:
+		return m.Status()
+	case admin.FieldDelStatus:
+		return m.DelStatus()
+	case admin.FieldUserName:
+		return m.UserName()
+	case admin.FieldTrueName:
+		return m.TrueName()
+	case admin.FieldMobile:
+		return m.Mobile()
 	}
 	return nil, false
 }
@@ -190,8 +485,20 @@ func (m *AdminMutation) Field(name string) (ent.Value, bool) {
 // database failed.
 func (m *AdminMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
-	case admin.FieldName:
-		return m.OldName(ctx)
+	case admin.FieldCreateTime:
+		return m.OldCreateTime(ctx)
+	case admin.FieldUpdateTime:
+		return m.OldUpdateTime(ctx)
+	case admin.FieldStatus:
+		return m.OldStatus(ctx)
+	case admin.FieldDelStatus:
+		return m.OldDelStatus(ctx)
+	case admin.FieldUserName:
+		return m.OldUserName(ctx)
+	case admin.FieldTrueName:
+		return m.OldTrueName(ctx)
+	case admin.FieldMobile:
+		return m.OldMobile(ctx)
 	}
 	return nil, fmt.Errorf("unknown Admin field %s", name)
 }
@@ -201,12 +508,54 @@ func (m *AdminMutation) OldField(ctx context.Context, name string) (ent.Value, e
 // type.
 func (m *AdminMutation) SetField(name string, value ent.Value) error {
 	switch name {
-	case admin.FieldName:
+	case admin.FieldCreateTime:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreateTime(v)
+		return nil
+	case admin.FieldUpdateTime:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdateTime(v)
+		return nil
+	case admin.FieldStatus:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetStatus(v)
+		return nil
+	case admin.FieldDelStatus:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDelStatus(v)
+		return nil
+	case admin.FieldUserName:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetName(v)
+		m.SetUserName(v)
+		return nil
+	case admin.FieldTrueName:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetTrueName(v)
+		return nil
+	case admin.FieldMobile:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetMobile(v)
 		return nil
 	}
 	return fmt.Errorf("unknown Admin field %s", name)
@@ -215,13 +564,26 @@ func (m *AdminMutation) SetField(name string, value ent.Value) error {
 // AddedFields returns all numeric fields that were incremented/decremented during
 // this mutation.
 func (m *AdminMutation) AddedFields() []string {
-	return nil
+	var fields []string
+	if m.addstatus != nil {
+		fields = append(fields, admin.FieldStatus)
+	}
+	if m.adddel_status != nil {
+		fields = append(fields, admin.FieldDelStatus)
+	}
+	return fields
 }
 
 // AddedField returns the numeric value that was incremented/decremented on a field
 // with the given name. The second boolean return value indicates that this field
 // was not set, or was not defined in the schema.
 func (m *AdminMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case admin.FieldStatus:
+		return m.AddedStatus()
+	case admin.FieldDelStatus:
+		return m.AddedDelStatus()
+	}
 	return nil, false
 }
 
@@ -230,6 +592,20 @@ func (m *AdminMutation) AddedField(name string) (ent.Value, bool) {
 // type.
 func (m *AdminMutation) AddField(name string, value ent.Value) error {
 	switch name {
+	case admin.FieldStatus:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddStatus(v)
+		return nil
+	case admin.FieldDelStatus:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddDelStatus(v)
+		return nil
 	}
 	return fmt.Errorf("unknown Admin numeric field %s", name)
 }
@@ -257,8 +633,26 @@ func (m *AdminMutation) ClearField(name string) error {
 // It returns an error if the field is not defined in the schema.
 func (m *AdminMutation) ResetField(name string) error {
 	switch name {
-	case admin.FieldName:
-		m.ResetName()
+	case admin.FieldCreateTime:
+		m.ResetCreateTime()
+		return nil
+	case admin.FieldUpdateTime:
+		m.ResetUpdateTime()
+		return nil
+	case admin.FieldStatus:
+		m.ResetStatus()
+		return nil
+	case admin.FieldDelStatus:
+		m.ResetDelStatus()
+		return nil
+	case admin.FieldUserName:
+		m.ResetUserName()
+		return nil
+	case admin.FieldTrueName:
+		m.ResetTrueName()
+		return nil
+	case admin.FieldMobile:
+		m.ResetMobile()
 		return nil
 	}
 	return fmt.Errorf("unknown Admin field %s", name)

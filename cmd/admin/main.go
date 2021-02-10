@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	admin.RunAdmin()
+	admin.Run()
 }

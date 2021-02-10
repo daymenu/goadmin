@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+
+option go_package = "github.com/daymenu/goadmin/api/admin";
+
+package admin;
+
+message Admin {
+  string  mobile = 1;
+}
+

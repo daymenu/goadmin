@@ -11,7 +11,13 @@ var (
 	// AdminsColumns holds the columns for the "admins" table.
 	AdminsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "name", Type: field.TypeString, Default: ""},
+		{Name: "create_time", Type: field.TypeTime},
+		{Name: "update_time", Type: field.TypeTime},
+		{Name: "status", Type: field.TypeInt, Default: 1},
+		{Name: "del_status", Type: field.TypeInt, Default: 1},
+		{Name: "user_name", Type: field.TypeString, Default: ""},
+		{Name: "true_name", Type: field.TypeString, Default: ""},
+		{Name: "mobile", Type: field.TypeString, Default: ""},
 	}
 	// AdminsTable holds the schema information for the "admins" table.
 	AdminsTable = &schema.Table{

@@ -3,6 +3,8 @@
 package ent
 
 import (
+	"time"
+
 	"github.com/daymenu/goadmin/internal/ent/admin"
 	"github.com/daymenu/goadmin/internal/ent/schema"
 )
@@ -11,10 +13,43 @@ import (
 // (default values, validators, hooks and policies) and stitches it
 // to their package variables.
 func init() {
+	adminMixin := schema.Admin{}.Mixin()
+	adminMixinFields0 := adminMixin[0].Fields()
+	_ = adminMixinFields0
+	adminMixinFields1 := adminMixin[1].Fields()
+	_ = adminMixinFields1
+	adminMixinFields2 := adminMixin[2].Fields()
+	_ = adminMixinFields2
 	adminFields := schema.Admin{}.Fields()
 	_ = adminFields
-	// adminDescName is the schema descriptor for name field.
-	adminDescName := adminFields[0].Descriptor()
-	// admin.DefaultName holds the default value on creation for the name field.
-	admin.DefaultName = adminDescName.Default.(string)
+	// adminDescCreateTime is the schema descriptor for create_time field.
+	adminDescCreateTime := adminMixinFields0[0].Descriptor()
+	// admin.DefaultCreateTime holds the default value on creation for the create_time field.
+	admin.DefaultCreateTime = adminDescCreateTime.Default.(func() time.Time)
+	// adminDescUpdateTime is the schema descriptor for update_time field.
+	adminDescUpdateTime := adminMixinFields0[1].Descriptor()
+	// admin.DefaultUpdateTime holds the default value on creation for the update_time field.
+	admin.DefaultUpdateTime = adminDescUpdateTime.Default.(func() time.Time)
+	// admin.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	admin.UpdateDefaultUpdateTime = adminDescUpdateTime.UpdateDefault.(func() time.Time)
+	// adminDescStatus is the schema descriptor for status field.
+	adminDescStatus := adminMixinFields1[0].Descriptor()
+	// admin.DefaultStatus holds the default value on creation for the status field.
+	admin.DefaultStatus = adminDescStatus.Default.(int)
+	// adminDescDelStatus is the schema descriptor for del_status field.
+	adminDescDelStatus := adminMixinFields2[0].Descriptor()
+	// admin.DefaultDelStatus holds the default value on creation for the del_status field.
+	admin.DefaultDelStatus = adminDescDelStatus.Default.(int)
+	// adminDescUserName is the schema descriptor for user_name field.
+	adminDescUserName := adminFields[0].Descriptor()
+	// admin.DefaultUserName holds the default value on creation for the user_name field.
+	admin.DefaultUserName = adminDescUserName.Default.(string)
+	// adminDescTrueName is the schema descriptor for true_name field.
+	adminDescTrueName := adminFields[1].Descriptor()
+	// admin.DefaultTrueName holds the default value on creation for the true_name field.
+	admin.DefaultTrueName = adminDescTrueName.Default.(string)
+	// adminDescMobile is the schema descriptor for mobile field.
+	adminDescMobile := adminFields[2].Descriptor()
+	// admin.DefaultMobile holds the default value on creation for the mobile field.
+	admin.DefaultMobile = adminDescMobile.Default.(string)
 }

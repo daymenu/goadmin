@@ -5,6 +5,7 @@ package ent
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/daymenu/goadmin/internal/ent/admin"
 	"github.com/facebook/ent/dialect/sql"
@@ -15,8 +16,20 @@ type Admin struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
-	// Name holds the value of the "name" field.
-	Name string `json:"name,omitempty"`
+	// CreateTime holds the value of the "create_time" field.
+	CreateTime time.Time `json:"create_time,omitempty"`
+	// UpdateTime holds the value of the "update_time" field.
+	UpdateTime time.Time `json:"update_time,omitempty"`
+	// Status holds the value of the "status" field.
+	Status int `json:"status,omitempty"`
+	// DelStatus holds the value of the "del_status" field.
+	DelStatus int `json:"del_status,omitempty"`
+	// UserName holds the value of the "user_name" field.
+	UserName string `json:"user_name,omitempty"`
+	// TrueName holds the value of the "true_name" field.
+	TrueName string `json:"true_name,omitempty"`
+	// Mobile holds the value of the "mobile" field.
+	Mobile string `json:"mobile,omitempty"`
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -24,10 +37,12 @@ func (*Admin) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case admin.FieldID:
+		case admin.FieldID, admin.FieldStatus, admin.FieldDelStatus:
 			values[i] = &sql.NullInt64{}
-		case admin.FieldName:
+		case admin.FieldUserName, admin.FieldTrueName, admin.FieldMobile:
 			values[i] = &sql.NullString{}
+		case admin.FieldCreateTime, admin.FieldUpdateTime:
+			values[i] = &sql.NullTime{}
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type Admin", columns[i])
 		}
@@ -49,11 +64,47 @@ func (a *Admin) assignValues(columns []string, values []interface{}) error {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			a.ID = int(value.Int64)
-		case admin.FieldName:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field name", values[i])
+		case admin.FieldCreateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field create_time", values[i])
 			} else if value.Valid {
-				a.Name = value.String
+				a.CreateTime = value.Time
+			}
+		case admin.FieldUpdateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field update_time", values[i])
+			} else if value.Valid {
+				a.UpdateTime = value.Time
+			}
+		case admin.FieldStatus:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field status", values[i])
+			} else if value.Valid {
+				a.Status = int(value.Int64)
+			}
+		case admin.FieldDelStatus:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field del_status", values[i])
+			} else if value.Valid {
+				a.DelStatus = int(value.Int64)
+			}
+		case admin.FieldUserName:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field user_name", values[i])
+			} else if value.Valid {
+				a.UserName = value.String
+			}
+		case admin.FieldTrueName:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field true_name", values[i])
+			} else if value.Valid {
+				a.TrueName = value.String
+			}
+		case admin.FieldMobile:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field mobile", values[i])
+			} else if value.Valid {
+				a.Mobile = value.String
 			}
 		}
 	}
@@ -83,8 +134,20 @@ func (a *Admin) String() string {
 	var builder strings.Builder
 	builder.WriteString("Admin(")
 	builder.WriteString(fmt.Sprintf("id=%v", a.ID))
-	builder.WriteString(", name=")
-	builder.WriteString(a.Name)
+	builder.WriteString(", create_time=")
+	builder.WriteString(a.CreateTime.Format(time.ANSIC))
+	builder.WriteString(", update_time=")
+	builder.WriteString(a.UpdateTime.Format(time.ANSIC))
+	builder.WriteString(", status=")
+	builder.WriteString(fmt.Sprintf("%v", a.Status))
+	builder.WriteString(", del_status=")
+	builder.WriteString(fmt.Sprintf("%v", a.DelStatus))
+	builder.WriteString(", user_name=")
+	builder.WriteString(a.UserName)
+	builder.WriteString(", true_name=")
+	builder.WriteString(a.TrueName)
+	builder.WriteString(", mobile=")
+	builder.WriteString(a.Mobile)
 	builder.WriteByte(')')
 	return builder.String()
 }

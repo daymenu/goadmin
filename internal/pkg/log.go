@@ -2,6 +2,7 @@ package pkg
 
 import (
 	"os"
+	"path/filepath"
 
 	"github.com/daymenu/goadmin/internal/config"
 	"go.uber.org/zap"
@@ -22,7 +23,7 @@ type logOptions struct {
 
 var defaultLogOptions = logOptions{
 	conf: config.Log{
-		Filename:   "./app.log",
+		Filename:   filepath.Join(config.AppPath(), "log", "app.log"),
 		MaxSize:    1024,
 		MaxAge:     3,
 		MaxBackups: 10,
@@ -34,6 +35,12 @@ var defaultLogOptions = logOptions{
 // LogOption A log option
 type LogOption interface {
 	apply(*logOptions)
+}
+
+// DefalultLogOption define default log option
+func DefalultLogOption() []LogOption {
+	var opts []LogOption
+	return opts
 }
 
 type funcLogOption struct {

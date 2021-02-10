@@ -35,6 +35,13 @@ func defaultDir() string {
 	return filepath.Join(path, "config")
 }
 
+// AppPath app path
+func AppPath() string {
+	_, f, _, _ := runtime.Caller(0)
+	path := filepath.Dir(filepath.Dir(filepath.Dir(f)))
+	return path
+}
+
 // Path path
 func (c *Config) Path() string {
 	pre := filepath.Join(c.dir, "app")

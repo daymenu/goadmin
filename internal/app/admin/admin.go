@@ -5,24 +5,27 @@ import (
 
 	"github.com/daymenu/goadmin/internal/app/admin/controller"
 	"github.com/daymenu/goadmin/internal/app/admin/router"
+	"github.com/daymenu/goadmin/internal/global"
+
+	// 初始化全局变量
+	_ "github.com/daymenu/goadmin/internal/global"
 	"github.com/daymenu/goadmin/internal/middleware"
-	"github.com/daymenu/goadmin/internal/pkg"
 	"github.com/gin-contrib/requestid"
 	"github.com/gin-gonic/gin"
 )
 
-// RunAdmin run a server
-func RunAdmin(addr ...string) {
+// Run run a server
+func Run(addr ...string) {
 	engine := gin.New()
-
-	logger := pkg.NewLog()
-	defer logger.Sync()
-
+	defer func() {
+		global.AdminEntClient.Close()
+		global.AppLog.Sync()
+	}()
 	engine.Use(requestid.New())
 
-	engine.Use(middleware.Ginzap(logger.Logger, time.RFC3339, true))
+	engine.Use(middleware.Ginzap(global.AppLog.Logger, time.RFC3339, true))
 
-	engine.Use(middleware.RecoveryWithZap(logger.Logger, true))
+	engine.Use(middleware.RecoveryWithZap(global.AppLog.Logger, true))
 
 	engine.GET("/ping", controller.Ping)
 
